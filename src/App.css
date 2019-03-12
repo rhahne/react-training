@@ -38,13 +38,31 @@
   margin: 0 auto;
   border: 1px solid black;
 }
+
 .left, .right {
   flex: 1;
 }
+
 .right ul{
   list-style: none;
 }
 
 .highlighted{
   background-color: aquamarine;
+}
+
+.numberContainer{
+  display: flex;
+  flex-wrap: wrap;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.numberBox{
+  width: 15%;
+  height: 20px;
+  border: 1px solid black;
+  margin: 0 auto;
+  padding: 0px;
+  margin: 0px;
 }

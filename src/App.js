@@ -9,7 +9,7 @@ class App extends Component {
       <div className="App">
         <h1>Reacting</h1>
 
-        <h2>Faceboooooook</h2>
+        <h2>Profiles</h2>
 
         <Facebook profiles={profiles} />
 
@@ -54,6 +54,10 @@ class App extends Component {
           <h2>State 3: Carousel</h2>
           <Carousel
             imgs={["https://randomuser.me/api/portraits/women/1.jpg", "https://randomuser.me/api/portraits/men/1.jpg", "https://randomuser.me/api/portraits/women/2.jpg", "https://randomuser.me/api/portraits/men/2.jpg"]} />
+
+          <h2>State 4: List and Keys</h2>
+          <NumbersTable limit={20} />
+
         </div>
       </div>
     );
@@ -229,36 +233,19 @@ export class Carousel extends Component {
   }
 }
 
-export default App;
-
-
-/*
-export class Dice extends Component {
-  constructor(props) {
-    super(props);
-    // Define your state object here
-    this.state = {
-      dice: this.getRandomImg()
-    }
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick() {
-    this.setState(() => ({
-      dice: this.getRandomImg()
-    }));
-  }
-  getRandomImg() {
-    this.diceImgs = ['img/dice1.png', 'img/dice2.png', 'img/dice3.png', 'img/dice4.png', 'img/dice5.png', 'img/dice6.png']
-    return <img onClick={this.handleClick} src={this.diceImgs[Math.floor(Math.random() * this.diceImgs.length)]} width="200" alt="dice"/>
-  }
+export class NumbersTable extends Component {
   render() {
+    var rows = [];
+    var amountOfNumbers = this.props.limit;
+    for (var i = 1; i < amountOfNumbers+1; i++) {
+        rows.push(<div className="numberBox">{i}</div>);
+    }
     return (
-      <div>
-        <button onClick={this.handleClick}>Roll the dice</button>
-        <br/> <br/>
-        {this.state.dice}
+      <div className="numberContainer">
+        {rows}
       </div>
-    );
+      )
   }
 }
-*/
+
+export default App;
