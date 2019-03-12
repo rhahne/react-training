@@ -31,3 +31,20 @@
     transform: rotate(360deg);
   }
 }
+
+.box{
+  display: flex;
+  width: 500px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+.left, .right {
+  flex: 1;
+}
+.right ul{
+  list-style: none;
+}
+
+.highlighted{
+  background-color: aquamarine;
+}
