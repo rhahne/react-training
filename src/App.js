@@ -58,6 +58,9 @@ class App extends Component {
           <h2>State 4: List and Keys</h2>
           <NumbersTable limit={20} />
 
+          <h2>Lifting State Up 1: RGBColorPicker</h2>
+          <RGBColorPicker />
+
         </div>
       </div>
     );
@@ -208,24 +211,24 @@ export class Carousel extends Component {
     this.allImgs = this.props.imgs
   }
   getNextImg() {
-    if (this.state.imgSource === 0){
-      this.setState({imgSource: this.allImgs.length - 1});
-    }else{
-      this.setState({imgSource: this.state.imgSource - 1});
+    if (this.state.imgSource === 0) {
+      this.setState({ imgSource: this.allImgs.length - 1 });
+    } else {
+      this.setState({ imgSource: this.state.imgSource - 1 });
     }
   }
   getLastImg() {
-    if (this.state.imgSource === this.allImgs.length - 1){
-      this.setState({imgSource: 0});
-    }else{
-      this.setState({imgSource: this.state.imgSource + 1});
+    if (this.state.imgSource === this.allImgs.length - 1) {
+      this.setState({ imgSource: 0 });
+    } else {
+      this.setState({ imgSource: this.state.imgSource + 1 });
     }
   }
   render() {
     return (
       <div>
-        <button onClick={() => {this.getNextImg()}}>Links</button>
-        <button onClick={() => {this.getLastImg()}}>Rechts</button>
+        <button onClick={() => { this.getNextImg() }}>Links</button>
+        <button onClick={() => { this.getLastImg() }}>Rechts</button>
         <br />
         <img src={this.allImgs[this.state.imgSource]} alt="randomImg" />
       </div>
@@ -237,15 +240,99 @@ export class NumbersTable extends Component {
   render() {
     var rows = [];
     var amountOfNumbers = this.props.limit;
-    for (var i = 1; i < amountOfNumbers+1; i++) {
+    for (var i = 1; i < amountOfNumbers + 1; i++) {
+      if (i % 2 === 0) {
+        rows.push(<div className="numberBox even">{i}</div>);
+      } else {
         rows.push(<div className="numberBox">{i}</div>);
+      }
+
     }
     return (
       <div className="numberContainer">
         {rows}
       </div>
-      )
+    )
   }
 }
+
+export class RGBColorPicker extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rValue: Math.floor(Math.random() * 255) + 0,
+      gValue: Math.floor(Math.random() * 255) + 0,
+      bValue: Math.floor(Math.random() * 255) + 0
+    }
+    this.changeColor = this.changeColor.bind(this);
+  }
+  changeColor(event) {
+    var newColorValue = event.currentTarget.value;
+    var color = event.currentTarget.id;
+    switch (color) {
+      case 'r':
+        this.setState({ rValue: newColorValue });
+        break;
+      case 'g':
+        this.setState({ gValue: newColorValue });
+        break;
+      case 'b': 
+        this.setState({ bValue: newColorValue });
+        break;
+      default:
+        break;
+    }
+  }
+  render() {
+    var divStyle = {
+      backgroundColor: 'rgb('+this.state.rValue.toString() + ',' + this.state.gValue.toString() + ',' + this.state.bValue.toString()+')',
+      padding: '200px'
+    }
+    return (
+      <div style={divStyle}>
+        <ColorValue changeColor={this.changeColor} color='r' colorValue={this.state.rValue} />
+        <ColorValue changeColor={this.changeColor} color='g' colorValue={this.state.gValue} />
+        <ColorValue changeColor={this.changeColor} color='b' colorValue={this.state.bValue} />
+      </div>
+    )
+  }
+}
+
+export class ColorValue extends Component {
+  render() {
+    var divStyle = {
+      backgroundColor: 'rgb(0,0,0)'
+    };
+    switch (this.props.color) {
+      case 'r':
+        divStyle = {
+          backgroundColor: 'rgb('+this.props.colorValue + ',0,0)'
+        }
+        break;
+      case 'g':
+        divStyle = {
+          backgroundColor: 'rgb(0,'+this.props.colorValue+',0)'
+        }
+        break;
+      case 'b':
+        divStyle = {
+          backgroundColor: 'rgb(0,0,'+this.props.colorValue+')'
+        }
+        break;            
+      default:
+      divStyle = {
+          backgroundColor: 'rgb(0,0,0)'
+        } 
+        break;
+    }
+    return (
+      <div className="colorContainer">
+        <span className="colorBox" style={divStyle}>{this.props.color}</span>
+        <input type="number" min="0" max="255" onChange={this.props.changeColor} value={this.props.colorValue} id={this.props.color}/><br />
+      </div>
+    )
+  }
+}
+
 
 export default App;
