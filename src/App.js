@@ -290,9 +290,9 @@ export class RGBColorPicker extends Component {
     }
     return (
       <div style={divStyle}>
-        <ColorValue changeColor={this.changeColor} color='r' colorValue={this.state.rValue} />
-        <ColorValue changeColor={this.changeColor} color='g' colorValue={this.state.gValue} />
-        <ColorValue changeColor={this.changeColor} color='b' colorValue={this.state.bValue} />
+        <ColorValue changeColor={this.changeColor} colorNr='1' color='r' colorValue={this.state.rValue} />
+        <ColorValue changeColor={this.changeColor} colorNr='2' color='g' colorValue={this.state.gValue} />
+        <ColorValue changeColor={this.changeColor} colorNr='3' color='b' colorValue={this.state.bValue} />
       </div>
     )
   }
@@ -300,31 +300,13 @@ export class RGBColorPicker extends Component {
 
 export class ColorValue extends Component {
   render() {
-    var divStyle = {
-      backgroundColor: 'rgb(0,0,0)'
-    };
-    switch (this.props.color) {
-      case 'r':
-        divStyle = {
-          backgroundColor: 'rgb('+this.props.colorValue + ',0,0)'
-        }
-        break;
-      case 'g':
-        divStyle = {
-          backgroundColor: 'rgb(0,'+this.props.colorValue+',0)'
-        }
-        break;
-      case 'b':
-        divStyle = {
-          backgroundColor: 'rgb(0,0,'+this.props.colorValue+')'
-        }
-        break;            
-      default:
-      divStyle = {
-          backgroundColor: 'rgb(0,0,0)'
-        } 
-        break;
+    var rgb = ['0','0'];
+    for(var i = 0; i < 3; i++){
+      if (this.props.colorNr === (i+1).toString()) rgb.splice(i, 0, this.props.colorValue)
     }
+    var divStyle = {
+      backgroundColor: 'rgb('+[...rgb]+')'
+    };
     return (
       <div className="colorContainer">
         <span className="colorBox" style={divStyle}>{this.props.color}</span>
